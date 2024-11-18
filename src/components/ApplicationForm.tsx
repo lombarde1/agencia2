@@ -174,7 +174,7 @@ export default function ApplicationForm({ onClose, isModal = true }) {
         mode: 'cors', // Explicitamente definindo o modo
         body: JSON.stringify({
           funnelId: "59d1db7e-28d7-4af6-a4fc-6ce01ddb937d",
-          instanceKey: "agenciaspicy",
+          instanceKey: "agenciaspy",
           chatId: phoneNumber
         })
       });
