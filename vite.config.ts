@@ -8,20 +8,17 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/funnel': {
+      '/api': {
         target: 'https://dev.hocketzap.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/funnel/, '/api/v2/funnel'),
-        secure: false, // Desabilita verificação SSL para desenvolvimento
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
         configure: (proxy, _options) => {
           proxy.on('error', (err, _req, _res) => {
             console.log('proxy error', err);
           });
           proxy.on('proxyReq', (proxyReq, req, _res) => {
-            console.log('Sending Request to the Target:', req.method, req.url);
-          });
-          proxy.on('proxyRes', (proxyRes, req, _res) => {
-            console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+            proxyReq.setHeader('Origin', 'https://dev.hocketzap.com');
           });
         },
       }

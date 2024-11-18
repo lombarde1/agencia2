@@ -163,16 +163,18 @@ export default function ApplicationForm({ onClose, isModal = true }) {
         formData
       });
   
-      // Usando o proxy configurado no Vite
-      const response = await fetch('/api/funnel/execute', {
+      const response = await fetch('https://dev.hocketzap.com/api/v2/funnel/execute', {
         method: 'POST',
         headers: {
-          'x-api-key': 'hkt_96a4f4596a6a4fa29b3f9db971855b96',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'x-api-key': 'hkt_96a4f4596a6a4fa29b3f9db971855b96',
         },
+        credentials: 'include', // Importante para CORS com cookies
+        mode: 'cors', // Explicitamente definindo o modo
         body: JSON.stringify({
           funnelId: "59d1db7e-28d7-4af6-a4fc-6ce01ddb937d",
-          instanceKey: "agenciaspy",
+          instanceKey: "agenciaspicy",
           chatId: phoneNumber
         })
       });
@@ -194,8 +196,9 @@ export default function ApplicationForm({ onClose, isModal = true }) {
       }
     } catch (err) {
       console.error("Erro no envio:", err);
-      setError(err instanceof Error ? err.message : 'Erro ao enviar formulário');
-      alert(err instanceof Error ? err.message : 'Erro ao enviar formulário');
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao enviar formulário';
+      setError(errorMessage);
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
